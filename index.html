@@ -264,94 +264,179 @@
         .modal select:focus { border-color: #3498db; outline: none; }
         .modal-overlay.active { pointer-events: auto; }
         .modal-overlay.active .modal { pointer-events: auto; }
-        .firebase-setup-box { background: #e8f4fd; border: 2px solid #3498db; border-radius: 10px; padding: 20px; margin-top: 20px; text-align: left; }
-        .firebase-setup-box h4 { color: #2c3e50; margin-bottom: 10px; }
-        .firebase-setup-box code { background: #2c3e50; color: #fff; padding: 2px 6px; border-radius: 3px; font-size: 12px; }
-        .firebase-setup-box ol { margin-left: 20px; color: #555; line-height: 1.8; }
-        .firebase-setup-box .config-input { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-family: monospace; font-size: 12px; margin: 4px 0; }
+
+        /* ===== AUTH PAGE ===== */
+        .auth-page { display: flex; width: 100%; height: 100vh; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); }
+        .auth-left {
+            flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            padding: 60px; color: #fff; text-align: center;
+            background: rgba(0,0,0,0.15);
+        }
+        .auth-left .auth-logo { font-size: 80px; margin-bottom: 20px; filter: drop-shadow(0 4px 20px rgba(0,0,0,0.3)); }
+        .auth-left h1 { font-size: 36px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.5px; }
+        .auth-left p { font-size: 16px; color: rgba(255,255,255,0.75); line-height: 1.6; max-width: 380px; }
+        .auth-left .auth-features { margin-top: 40px; text-align: left; max-width: 320px; }
+        .auth-left .auth-features li { font-size: 14px; color: rgba(255,255,255,0.7); margin-bottom: 12px; list-style: none; display: flex; align-items: center; gap: 10px; }
+        .auth-left .auth-features li::before { content: '✓'; display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: #27ae60; border-radius: 50%; font-size: 12px; font-weight: 700; color: #fff; flex-shrink: 0; }
+        .auth-right {
+            width: 460px; background: #fff; display: flex; flex-direction: column; justify-content: center;
+            padding: 50px; box-shadow: -10px 0 40px rgba(0,0,0,0.2); position: relative;
+        }
+        .auth-right .auth-header { text-align: center; margin-bottom: 30px; }
+        .auth-right .auth-header h2 { font-size: 24px; color: #2c3e50; margin-bottom: 6px; }
+        .auth-right .auth-header p { font-size: 13px; color: #7f8c8d; }
+        .auth-tabs { display: flex; gap: 0; margin-bottom: 25px; border-bottom: 2px solid #ecf0f1; }
+        .auth-tab {
+            flex: 1; padding: 12px; background: none; border: none; border-bottom: 2px solid transparent;
+            margin-bottom: -2px; font-size: 14px; font-weight: 600; color: #95a5a6; cursor: pointer;
+            transition: all 0.3s;
+        }
+        .auth-tab.active { color: #3498db; border-bottom-color: #3498db; }
+        .auth-tab:hover { color: #2c3e50; }
+        .auth-form { display: none; }
+        .auth-form.active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .auth-form .form-group { margin-bottom: 16px; }
+        .auth-form .form-group label { display: block; margin-bottom: 6px; font-size: 13px; font-weight: 600; color: #2c3e50; }
+        .auth-form .form-group input, .auth-form .form-group select {
+            width: 100%; padding: 12px 14px; border: 2px solid #e8e8e8; border-radius: 8px;
+            font-size: 14px; outline: none; transition: border-color 0.3s; background: #fafafa;
+        }
+        .auth-form .form-group input:focus, .auth-form .form-group select:focus { border-color: #3498db; background: #fff; }
+        .auth-form .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .auth-btn {
+            width: 100%; padding: 14px; background: #3498db; color: #fff; border: none;
+            border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer;
+            transition: all 0.3s; margin-top: 8px;
+        }
+        .auth-btn:hover { background: #2980b9; transform: translateY(-1px); }
+        .auth-btn.success { background: #27ae60; }
+        .auth-btn.success:hover { background: #219a52; }
+        .auth-error { color: #e74c3c; font-size: 13px; margin-top: 12px; min-height: 18px; text-align: center; }
+        .auth-success { color: #27ae60; font-size: 13px; margin-top: 12px; min-height: 18px; text-align: center; }
+        .auth-divider { display: flex; align-items: center; margin: 20px 0; color: #bdc3c7; font-size: 12px; }
+        .auth-divider::before, .auth-divider::after { content: ''; flex: 1; height: 1px; background: #ecf0f1; }
+        .auth-divider span { padding: 0 12px; }
+        .demo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .demo-grid button {
+            padding: 10px; border: none; border-radius: 6px; font-size: 12px; cursor: pointer;
+            color: #fff; font-weight: 600; transition: opacity 0.2s;
+        }
+        .demo-grid button:hover { opacity: 0.9; }
+        .auth-footer { position: absolute; bottom: 20px; left: 50px; right: 50px; text-align: center; font-size: 11px; color: #bdc3c7; }
+        .auth-footer .sync-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #e74c3c; margin-right: 5px; }
+        .auth-footer .sync-dot.online { background: #27ae60; animation: pulse 2s infinite; }
+        .auth-spinner {
+            display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; margin-left: 8px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .auth-connecting { text-align: center; padding: 40px 20px; }
+        .auth-connecting .spinner-big {
+            width: 40px; height: 40px; border: 3px solid #e8e8e8; border-top-color: #3498db;
+            border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 15px;
+        }
+        .auth-connecting p { color: #7f8c8d; font-size: 14px; }
+        @media (max-width: 900px) {
+            .auth-left { display: none; }
+            .auth-right { width: 100%; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- LOGIN OVERLAY -->
-    <div class="modal-overlay login-overlay active" id="login-overlay" style="z-index: 3000;">
-        <div class="login-box">
-            <div class="logo">🛒</div>
+    <!-- AUTH PAGE -->
+    <div class="auth-page" id="auth-page">
+        <div class="auth-left">
+            <div class="auth-logo">🛒</div>
             <h1>MY STORE POS</h1>
-            <p class="subtitle">Multi-User Networked Edition</p>
+            <p>Multi-User Networked Point of Sale System. Manage sales, inventory, staff, and customers — all synced in real-time across devices.</p>
+            <ul class="auth-features">
+                <li>Real-time data sync across all devices</li>
+                <li>Role-based access (Admin, Manager, Supervisor, Cashier)</li>
+                <li>Inventory alerts & stock management</li>
+                <li>Credit sales & customer tracking</li>
+                <li>Reports, expenses & shift logs</li>
+            </ul>
+        </div>
+        <div class="auth-right">
+            <!-- Hidden Firebase Config Inputs -->
+            <input type="hidden" id="fb-api-key" value="AIzaSyA3LiTepwOdKwSb6j0ZrE0swNa7JYwyBiE">
+            <input type="hidden" id="fb-auth-domain" value="smart-pos-d409e.firebaseapp.com">
+            <input type="hidden" id="fb-project-id" value="smart-pos-d409e">
+            <input type="hidden" id="fb-storage-bucket" value="smart-pos-d409e.firebasestorage.app">
+            <input type="hidden" id="fb-messaging-sender-id" value="396228952889">
+            <input type="hidden" id="fb-app-id" value="1:396228952889:web:4bd6a009c3284c178bdee8">
+            <input type="hidden" id="fb-measurement-id" value="G-Y5JPS0RJMG">
 
-            <!-- Firebase Config (hidden inputs, shown only when no config saved) -->
-            <div id="firebase-config-section" style="margin-bottom: 15px;">
-                <p style="font-size: 13px; color: #2c3e50; margin-bottom: 10px; font-weight: 600;">🔗 Connect to Firebase</p>
-                <input type="hidden" id="fb-api-key" value="AIzaSyA3LiTepwOdKwSb6j0ZrE0swNa7JYwyBiE">
-                <input type="hidden" id="fb-auth-domain" value="smart-pos-d409e.firebaseapp.com">
-                <input type="hidden" id="fb-project-id" value="smart-pos-d409e">
-                <input type="hidden" id="fb-storage-bucket" value="smart-pos-d409e.firebasestorage.app">
-                <input type="hidden" id="fb-messaging-sender-id" value="396228952889">
-                <input type="hidden" id="fb-app-id" value="1:396228952889:web:4bd6a009c3284c178bdee8">
-                <input type="hidden" id="fb-measurement-id" value="G-Y5JPS0RJMG">
-                <button onclick="saveFirebaseConfig()" class="login-btn" style="margin-top: 0; background: #3498db;">💾 Connect to Project: smart-pos-d409e</button>
-                <p style="font-size: 11px; color: #7f8c8d; margin-top: 8px;">Click to initialize the database connection</p>
+            <!-- Connecting State -->
+            <div id="auth-connecting" class="auth-connecting">
+                <div class="spinner-big"></div>
+                <p>Connecting to Firebase...</p>
             </div>
 
-            <!-- Login Form -->
-            <div id="login-form-section" style="display: none;">
-                <div class="form-group">
-                    <label>Staff ID / Code</label>
-                    <input type="text" id="login-code" placeholder="e.g. STF001" onkeydown="if(event.key==='Enter')document.getElementById('login-pin').focus()">
+            <!-- Auth Forms -->
+            <div id="auth-forms" style="display: none;">
+                <div class="auth-header">
+                    <h2 id="auth-title">Welcome Back</h2>
+                    <p id="auth-subtitle">Sign in to your staff account</p>
                 </div>
-                <div class="form-group">
-                    <label>PIN / Password</label>
-                    <input type="password" id="login-pin" placeholder="Enter your 4-digit PIN" onkeydown="if(event.key==='Enter')doLogin()">
-                </div>
-                <button class="login-btn" onclick="doLogin()">🔐 Sign In</button>
-                <div class="error-msg" id="login-error"></div>
 
-                <!-- Quick Demo Logins -->
-                <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #e0e0e0;">
-                    <p style="font-size: 12px; color: #7f8c8d; margin-bottom: 10px;">👇 Quick Demo Logins (all PIN: 1234)</p>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-                        <button onclick="demoLogin('ADMIN001', '1234')" style="padding: 8px; background: #2c3e50; color: #fff; border: none; border-radius: 6px; font-size: 12px; cursor: pointer;">👤 Admin</button>
-                        <button onclick="demoLogin('MGR001', '1234')" style="padding: 8px; background: #9b59b6; color: #fff; border: none; border-radius: 6px; font-size: 12px; cursor: pointer;">👤 Manager</button>
-                        <button onclick="demoLogin('SUP001', '1234')" style="padding: 8px; background: #3498db; color: #fff; border: none; border-radius: 6px; font-size: 12px; cursor: pointer;">👤 Supervisor</button>
-                        <button onclick="demoLogin('CSH001', '1234')" style="padding: 8px; background: #f39c12; color: #fff; border: none; border-radius: 6px; font-size: 12px; cursor: pointer;">👤 Cashier</button>
+                <div class="auth-tabs">
+                    <button class="auth-tab active" id="tab-signin" onclick="switchAuthTab('signin')">Sign In</button>
+                    <button class="auth-tab" id="tab-register" onclick="switchAuthTab('register')">Register</button>
+                </div>
+
+                <!-- Sign In Form -->
+                <div class="auth-form active" id="form-signin">
+                    <div class="form-group">
+                        <label>Staff ID / Code</label>
+                        <input type="text" id="login-code" placeholder="e.g. STF001" onkeydown="if(event.key==='Enter')document.getElementById('login-pin').focus()">
+                    </div>
+                    <div class="form-group">
+                        <label>PIN / Password</label>
+                        <input type="password" id="login-pin" placeholder="Enter your 4-digit PIN" onkeydown="if(event.key==='Enter')doLogin()">
+                    </div>
+                    <button class="auth-btn" onclick="doLogin()">🔐 Sign In</button>
+                    <div class="auth-error" id="login-error"></div>
+
+                    <div class="auth-divider"><span>or try a demo account</span></div>
+                    <div class="demo-grid">
+                        <button onclick="demoLogin('ADMIN001', '1234')" style="background: #2c3e50;">👤 Admin</button>
+                        <button onclick="demoLogin('MGR001', '1234')" style="background: #9b59b6;">👤 Manager</button>
+                        <button onclick="demoLogin('SUP001', '1234')" style="background: #3498db;">👤 Supervisor</button>
+                        <button onclick="demoLogin('CSH001', '1234')" style="background: #f39c12;">👤 Cashier</button>
                     </div>
                 </div>
+
+                <!-- Register Form -->
+                <div class="auth-form" id="form-register">
+                    <div class="form-row">
+                        <div class="form-group"><label>First Name *</label><input type="text" id="setup-firstname" placeholder="e.g. John"></div>
+                        <div class="form-group"><label>Last Name *</label><input type="text" id="setup-lastname" placeholder="e.g. Doe"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Phone Number *</label><input type="text" id="setup-phone" placeholder="e.g. 0712 345 678"></div>
+                        <div class="form-group"><label>Email</label><input type="email" id="setup-email" placeholder="admin@store.com"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Staff ID / Code *</label><input type="text" id="setup-code" placeholder="e.g. ADMIN001"></div>
+                        <div class="form-group"><label>PIN *</label><input type="password" id="setup-pin" placeholder="Min 4 digits" oninput="checkSetupPinMatch()"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm PIN *</label>
+                        <input type="password" id="setup-pin-confirm" placeholder="Re-enter your PIN" oninput="checkSetupPinMatch()">
+                        <div id="setup-pin-hint" style="font-size: 12px; margin-top: 4px; color: #e74c3c; min-height: 16px;"></div>
+                    </div>
+                    <button class="auth-btn success" onclick="doSetup()">🚀 Create Admin Account</button>
+                    <div class="auth-error" id="setup-error"></div>
+                </div>
             </div>
 
-            <!-- Duty Preview -->
-            <div class="duty-info" id="login-duty-info" style="display: none;">
-                <h4>📋 Your Duties & Responsibilities</h4>
-                <ul id="duty-list"></ul>
+            <div class="auth-footer">
+                <span class="sync-dot" id="auth-sync-dot"></span>
+                <span id="auth-sync-text">Offline</span>
             </div>
-        </div>
-    </div>
-
-    <!-- FIRST-TIME SETUP OVERLAY -->
-    <div class="modal-overlay login-overlay active" id="setup-overlay" style="z-index: 3001; display: none;">
-        <div class="login-box">
-            <div class="logo">🛒</div>
-            <h1>Welcome to POS</h1>
-            <p class="subtitle">Create your first admin account to get started.</p>
-            <div class="form-row">
-                <div class="form-group"><label>First Name *</label><input type="text" id="setup-firstname" placeholder="e.g. John"></div>
-                <div class="form-group"><label>Last Name *</label><input type="text" id="setup-lastname" placeholder="e.g. Doe"></div>
-            </div>
-            <div class="form-row">
-                <div class="form-group"><label>Phone Number *</label><input type="text" id="setup-phone" placeholder="e.g. 0712 345 678"></div>
-                <div class="form-group"><label>Email</label><input type="email" id="setup-email" placeholder="admin@store.com"></div>
-            </div>
-            <div class="form-row">
-                <div class="form-group"><label>Staff ID / Code *</label><input type="text" id="setup-code" placeholder="e.g. ADMIN001"></div>
-                <div class="form-group"><label>PIN *</label><input type="password" id="setup-pin" placeholder="Min 4 digits" oninput="checkSetupPinMatch()"></div>
-            </div>
-            <div class="form-group">
-                <label>Confirm PIN *</label>
-                <input type="password" id="setup-pin-confirm" placeholder="Re-enter your PIN" oninput="checkSetupPinMatch()">
-                <div id="setup-pin-hint" style="font-size: 12px; margin-top: 4px; color: #e74c3c; min-height: 16px;"></div>
-            </div>
-            <button class="login-btn" onclick="doSetup()">🚀 Create Admin Account</button>
-            <div class="error-msg" id="setup-error"></div>
         </div>
     </div>
 
@@ -978,67 +1063,63 @@
             const appId = document.getElementById('fb-app-id').value.trim();
             const measurementId = document.getElementById('fb-measurement-id').value.trim();
             if (!apiKey || !authDomain || !projectId) {
-                showToast('Please fill in all required Firebase config fields', 'error');
+                showToast('Firebase configuration is incomplete', 'error');
                 return;
             }
             firebaseConfig = { apiKey, authDomain, projectId, storageBucket, messagingSenderId, appId, measurementId };
             localStorage.setItem('pos_firebase_config', JSON.stringify(firebaseConfig));
-            document.getElementById('firebase-config-section').style.display = 'none';
-            document.getElementById('setup-instructions').style.display = 'none';
-            document.getElementById('login-form-section').style.display = 'block';
             initFirebase();
-            showToast('Connected to smart-pos-d409e! Initializing...', 'success');
         }
 
         function initFirebase() {
             if (firebaseInitialized) return;
             const config = getSavedFirebaseConfig();
             if (!config) {
-                document.getElementById('firebase-config-section').style.display = 'block';
-                document.getElementById('login-form-section').style.display = 'none';
+                // Show manual config UI if no config found
+                document.getElementById('auth-connecting').innerHTML = '<p style="color:#e74c3c;">⚠️ No Firebase config found. Please check the hidden config fields.</p>';
                 return;
             }
             try {
-                // Filter out empty values
                 const cleanConfig = {};
                 Object.keys(config).forEach(k => { if (config[k]) cleanConfig[k] = config[k]; });
                 firebase.initializeApp(cleanConfig);
                 db = firebase.firestore();
                 auth = firebase.auth();
 
-                // Enable offline persistence for multi-tab sync
                 db.enablePersistence({ synchronizeTabs: true })
                     .then(() => console.log('[POS] Firestore persistence enabled'))
                     .catch(err => console.warn('[POS] Persistence error:', err));
 
-                // Monitor connection state
-                const connectedRef = firebase.database ? firebase.database().ref('.info/connected') : null;
-                if (connectedRef) {
-                    connectedRef.on('value', (snap) => {
-                        isOnline = snap.val() === true;
-                        updateSyncStatus();
-                    });
-                } else {
-                    // Fallback for Firestore-only projects
-                    isOnline = navigator.onLine;
-                    window.addEventListener('online', () => { isOnline = true; updateSyncStatus(); });
-                    window.addEventListener('offline', () => { isOnline = false; updateSyncStatus(); });
-                }
+                isOnline = navigator.onLine;
+                window.addEventListener('online', () => { isOnline = true; updateAuthSyncStatus(); });
+                window.addEventListener('offline', () => { isOnline = false; updateAuthSyncStatus(); });
 
                 firebaseInitialized = true;
                 console.log('[POS] Firebase initialized');
 
-                // Sign in anonymously to get a valid auth token for Firestore
                 auth.signInAnonymously().then(() => {
                     console.log('[POS] Anonymous auth ready');
                     initDataListeners();
                 }).catch(err => {
                     console.error('[POS] Auth error:', err);
-                    showToast('Firebase auth failed. Check your config.', 'error');
+                    document.getElementById('auth-connecting').innerHTML = '<p style="color:#e74c3c;">Authentication failed. Check your Firebase config.</p>';
                 });
             } catch (e) {
                 console.error('[POS] Firebase init error:', e);
-                showToast('Failed to initialize Firebase. Check config.', 'error');
+                document.getElementById('auth-connecting').innerHTML = '<p style="color:#e74c3c;">Failed to connect. Check your Firebase configuration.</p>';
+            }
+        }
+
+        function updateAuthSyncStatus() {
+            const dot = document.getElementById('auth-sync-dot');
+            const text = document.getElementById('auth-sync-text');
+            if (!dot || !text) return;
+            if (isOnline) {
+                dot.className = 'sync-dot online';
+                text.textContent = 'Live Sync';
+            } else {
+                dot.className = 'sync-dot';
+                text.textContent = 'Offline Mode';
             }
         }
 
@@ -1151,11 +1232,37 @@
 
         function checkAllDataReady() {
             const allReady = Object.values(dataReady).every(v => v);
-            if (allReady && staff.length === 0) {
-                // No staff found in Firestore - show setup
-                document.getElementById('login-overlay').classList.remove('active');
-                document.getElementById('setup-overlay').style.display = 'flex';
-                document.getElementById('setup-overlay').classList.add('active');
+            if (!allReady) return;
+
+            // Hide connecting spinner, show auth forms
+            document.getElementById('auth-connecting').style.display = 'none';
+            document.getElementById('auth-forms').style.display = 'block';
+            updateAuthSyncStatus();
+
+            if (staff.length === 0) {
+                // No staff found - show register tab
+                switchAuthTab('register');
+                document.getElementById('auth-title').textContent = 'Create Your Account';
+                document.getElementById('auth-subtitle').textContent = 'Set up the first admin account to get started';
+            } else {
+                // Staff exists - show sign in tab
+                switchAuthTab('signin');
+                document.getElementById('auth-title').textContent = 'Welcome Back';
+                document.getElementById('auth-subtitle').textContent = 'Sign in to your staff account';
+            }
+        }
+
+        function switchAuthTab(tab) {
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+            document.getElementById('tab-' + tab).classList.add('active');
+            document.getElementById('form-' + tab).classList.add('active');
+            if (tab === 'signin') {
+                document.getElementById('auth-title').textContent = 'Welcome Back';
+                document.getElementById('auth-subtitle').textContent = 'Sign in to your staff account';
+            } else {
+                document.getElementById('auth-title').textContent = 'Create Your Account';
+                document.getElementById('auth-subtitle').textContent = 'Register a new staff account';
             }
         }
 
@@ -1470,13 +1577,11 @@
             const errorEl = document.getElementById('login-error');
 
             if (!code || !pin) { errorEl.textContent = 'Please enter both Staff ID and PIN'; return; }
-            if (!db) { errorEl.textContent = 'Firebase not ready. Please wait or refresh.'; return; }
+            if (!db) { errorEl.textContent = 'Database not ready. Please wait or refresh.'; return; }
 
-            // Check if staff exists in Firestore
             const staffSnap = await getCollectionRef('staff').where('code', '==', code).where('pin', '==', pin).where('status', '==', 'active').get();
 
             if (staffSnap.empty) {
-                // Check if inactive
                 const inactiveSnap = await getCollectionRef('staff').where('code', '==', code).get();
                 if (!inactiveSnap.empty && inactiveSnap.docs[0].data().status !== 'active') {
                     errorEl.textContent = 'Account is inactive. Contact your manager.';
@@ -1503,7 +1608,7 @@
             await addDoc('shifts', shiftData);
 
             // Show app
-            document.getElementById('login-overlay').classList.remove('active');
+            document.getElementById('auth-page').style.display = 'none';
             document.getElementById('main-app').style.display = 'flex';
             document.getElementById('logged-in-info').textContent = `👤 ${currentUser.firstName} ${currentUser.lastName} (${currentUser.role.toUpperCase()})`;
             showToast(`Welcome, ${currentUser.firstName} ${currentUser.lastName}!`, 'success');
@@ -1539,7 +1644,7 @@
             if (!firstName || !lastName || !phone || !code || !pin) { errorEl.textContent = 'Please fill in all required fields'; return; }
             if (pin.length < 4) { errorEl.textContent = 'PIN must be at least 4 digits'; return; }
             if (pin !== pinConfirm) { errorEl.textContent = 'PIN and Confirm PIN do not match'; return; }
-            if (!db) { errorEl.textContent = 'Firebase not ready. Please wait.'; return; }
+            if (!db) { errorEl.textContent = 'Database not ready. Please wait.'; return; }
 
             const newStaff = {
                 firstName, lastName, phone, email, role: 'admin', code, status: 'active',
@@ -1550,12 +1655,12 @@
                 await addDoc('staff', newStaff);
                 await seedDemoData();
                 errorEl.textContent = '';
-                document.getElementById('setup-overlay').classList.remove('active');
-                document.getElementById('setup-overlay').style.display = 'none';
-                document.getElementById('login-overlay').classList.add('active');
-                showToast('Admin account created! Please sign in.', 'success');
+                // Switch to sign in tab with the new credentials
+                switchAuthTab('signin');
                 document.getElementById('login-code').value = code;
+                document.getElementById('login-pin').value = '';
                 document.getElementById('login-pin').focus();
+                showToast('Admin account created! Please sign in.', 'success');
             } catch (e) {
                 errorEl.textContent = 'Error saving to Firebase: ' + e.message;
             }
@@ -1563,7 +1668,6 @@
 
         async function doSignOut() {
             if (!confirm('Are you sure you want to sign out?')) return;
-            // End active shift
             const activeShift = shifts.find(s => s.staffId === activeStaffId && s.status === 'active');
             if (activeShift && activeShift.firestoreId) {
                 await updateDoc('shifts', activeShift.firestoreId, {
@@ -1573,10 +1677,9 @@
             }
             currentUser = null; activeStaffId = '';
             document.getElementById('main-app').style.display = 'none';
-            document.getElementById('login-overlay').classList.add('active');
+            document.getElementById('auth-page').style.display = 'flex';
             document.getElementById('login-code').value = '';
             document.getElementById('login-pin').value = '';
-            document.getElementById('login-duty-info').style.display = 'none';
             showToast('Signed out successfully', 'info');
         }
 
@@ -1631,14 +1734,9 @@
         document.getElementById('login-code').addEventListener('blur', function() {
             const code = this.value.trim();
             const user = staff.find(s => s.code === code && s.status === 'active');
-            const dutyInfo = document.getElementById('login-duty-info');
-            const dutyList = document.getElementById('duty-list');
             if (user) {
                 const duties = ROLE_DUTIES[user.role] || [];
-                dutyList.innerHTML = duties.map(d => `<li>${d}</li>`).join('');
-                dutyInfo.style.display = 'block';
-            } else {
-                dutyInfo.style.display = 'none';
+                // Could show a tooltip or small hint here if desired
             }
         });
 
@@ -1646,15 +1744,10 @@
         document.addEventListener('DOMContentLoaded', function() {
             const config = getSavedFirebaseConfig();
             if (config) {
-                document.getElementById('firebase-config-section').style.display = 'none';
-                document.getElementById('setup-instructions').style.display = 'none';
-                document.getElementById('login-form-section').style.display = 'block';
                 initFirebase();
             } else {
-                // Check if fields are pre-filled
                 const apiKey = document.getElementById('fb-api-key')?.value?.trim();
                 if (apiKey) {
-                    // Auto-save and connect
                     saveFirebaseConfig();
                 }
             }
