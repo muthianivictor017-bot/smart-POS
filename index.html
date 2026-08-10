@@ -279,18 +279,22 @@
             <div class="logo">🛒</div>
             <h1>MY STORE POS</h1>
             <p class="subtitle">Multi-User Networked Edition</p>
+
+            <!-- Firebase Config (hidden inputs, shown only when no config saved) -->
             <div id="firebase-config-section" style="margin-bottom: 15px;">
-                <p style="font-size: 12px; color: #7f8c8d; margin-bottom: 8px;">🔧 Firebase Config (pre-filled with your project)</p>
-                <input type="text" id="fb-api-key" class="config-input" placeholder="apiKey" value="AIzaSyA3LiTepwOdKwSb6j0ZrE0swNa7JYwyBiE">
-                <input type="text" id="fb-auth-domain" class="config-input" placeholder="authDomain" value="smart-pos-d409e.firebaseapp.com">
-                <input type="text" id="fb-project-id" class="config-input" placeholder="projectId" value="smart-pos-d409e">
+                <p style="font-size: 13px; color: #2c3e50; margin-bottom: 10px; font-weight: 600;">🔗 Connect to Firebase</p>
+                <input type="hidden" id="fb-api-key" value="AIzaSyA3LiTepwOdKwSb6j0ZrE0swNa7JYwyBiE">
+                <input type="hidden" id="fb-auth-domain" value="smart-pos-d409e.firebaseapp.com">
+                <input type="hidden" id="fb-project-id" value="smart-pos-d409e">
                 <input type="hidden" id="fb-storage-bucket" value="smart-pos-d409e.firebasestorage.app">
                 <input type="hidden" id="fb-messaging-sender-id" value="396228952889">
                 <input type="hidden" id="fb-app-id" value="1:396228952889:web:4bd6a009c3284c178bdee8">
                 <input type="hidden" id="fb-measurement-id" value="G-Y5JPS0RJMG">
-                <button onclick="saveFirebaseConfig()" style="padding: 6px 12px; background: #3498db; color: #fff; border: none; border-radius: 4px; font-size: 12px; cursor: pointer; margin-top: 5px;">💾 Connect to Firebase</button>
-                <p style="font-size: 11px; color: #27ae60; margin-top: 6px;">✅ Project: smart-pos-d409e | Ready to connect</p>
+                <button onclick="saveFirebaseConfig()" class="login-btn" style="margin-top: 0; background: #3498db;">💾 Connect to Project: smart-pos-d409e</button>
+                <p style="font-size: 11px; color: #7f8c8d; margin-top: 8px;">Click to initialize the database connection</p>
             </div>
+
+            <!-- Login Form -->
             <div id="login-form-section" style="display: none;">
                 <div class="form-group">
                     <label>Staff ID / Code</label>
@@ -302,6 +306,8 @@
                 </div>
                 <button class="login-btn" onclick="doLogin()">🔐 Sign In</button>
                 <div class="error-msg" id="login-error"></div>
+
+                <!-- Quick Demo Logins -->
                 <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #e0e0e0;">
                     <p style="font-size: 12px; color: #7f8c8d; margin-bottom: 10px;">👇 Quick Demo Logins (all PIN: 1234)</p>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
@@ -312,20 +318,11 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Duty Preview -->
             <div class="duty-info" id="login-duty-info" style="display: none;">
                 <h4>📋 Your Duties & Responsibilities</h4>
                 <ul id="duty-list"></ul>
-            </div>
-            <div class="firebase-setup-box" id="setup-instructions">
-                <h4>🚀 First Time Setup</h4>
-                <ol>
-                    <li>Go to <a href="https://console.firebase.google.com" target="_blank">Firebase Console</a></li>
-                    <li>Create a new project (free Spark plan works)</li>
-                    <li>Enable <strong>Firestore Database</strong> & <strong>Authentication</strong></li>
-                    <li>Copy your web app config from Project Settings</li>
-                    <li>Paste the 3 key values above and click Save</li>
-                    <li>All devices using this config will share data in real-time!</li>
-                </ol>
             </div>
         </div>
     </div>
@@ -335,18 +332,18 @@
         <div class="login-box">
             <div class="logo">🛒</div>
             <h1>Welcome to POS</h1>
-            <p class="subtitle">No staff accounts found. Create your first admin account to get started.</p>
+            <p class="subtitle">Create your first admin account to get started.</p>
             <div class="form-row">
-                <div class="form-group"><label>First Name</label><input type="text" id="setup-firstname" placeholder="e.g. Admin"></div>
-                <div class="form-group"><label>Last Name</label><input type="text" id="setup-lastname" placeholder="e.g. User"></div>
+                <div class="form-group"><label>First Name *</label><input type="text" id="setup-firstname" placeholder="e.g. John"></div>
+                <div class="form-group"><label>Last Name *</label><input type="text" id="setup-lastname" placeholder="e.g. Doe"></div>
             </div>
             <div class="form-row">
-                <div class="form-group"><label>Phone Number</label><input type="text" id="setup-phone" placeholder="e.g. 0712 345 678"></div>
+                <div class="form-group"><label>Phone Number *</label><input type="text" id="setup-phone" placeholder="e.g. 0712 345 678"></div>
                 <div class="form-group"><label>Email</label><input type="email" id="setup-email" placeholder="admin@store.com"></div>
             </div>
             <div class="form-row">
                 <div class="form-group"><label>Staff ID / Code *</label><input type="text" id="setup-code" placeholder="e.g. ADMIN001"></div>
-                <div class="form-group"><label>PIN / Password *</label><input type="password" id="setup-pin" placeholder="Min 4 digits" oninput="checkSetupPinMatch()"></div>
+                <div class="form-group"><label>PIN *</label><input type="password" id="setup-pin" placeholder="Min 4 digits" oninput="checkSetupPinMatch()"></div>
             </div>
             <div class="form-group">
                 <label>Confirm PIN *</label>
@@ -2934,7 +2931,222 @@
         }
         function closeStaffDetails() { document.getElementById('staff-details-modal').classList.remove('active'); }
 
-        // ===================== PURCHASE STOCK =====================
+        
+        // ===================== CUSTOMER MANAGEMENT =====================
+        function renderCustomersTable() {
+            const tbody = document.getElementById('customers-table');
+            if (!tbody) return;
+
+            // Calculate customer stats from sales
+            const customerStats = {};
+            sales.forEach(sale => {
+                if (sale.customer && sale.customer.id) {
+                    const cid = sale.customer.id;
+                    if (!customerStats[cid]) {
+                        customerStats[cid] = { purchases: 0, totalSpent: 0 };
+                    }
+                    customerStats[cid].purchases++;
+                    customerStats[cid].totalSpent += sale.total;
+                }
+            });
+
+            tbody.innerHTML = customers.map(c => {
+                const cid = c.firestoreId || c.id;
+                const stats = customerStats[cid] || { purchases: 0, totalSpent: 0 };
+                const creditDue = c.creditBalance || 0;
+                const creditClass = creditDue > 0 ? 'style="color: #e74c3c; font-weight: 600;"' : '';
+                return `<tr>
+                    <td>${c.firstName} ${c.lastName}</td>
+                    <td>${c.phone}</td>
+                    <td>${c.email || '-'}</td>
+                    <td><span class="customer-badge ${c.type}">${c.type.toUpperCase()}</span></td>
+                    <td>${c.discount || 0}%</td>
+                    <td>${stats.purchases}</td>
+                    <td>KSh ${stats.totalSpent.toFixed(2)}</td>
+                    <td ${creditClass}>${creditDue > 0 ? 'KSh ' + creditDue.toFixed(2) : '-'}</td>
+                    <td class="actions">
+                        <button class="edit-btn" onclick="viewCustomerDetails('${cid}')">View</button>
+                        <button class="edit-btn" onclick="editCustomer('${cid}')">Edit</button>
+                        <button class="delete-btn" onclick="deleteCustomer('${cid}')">Delete</button>
+                    </td>
+                </tr>`;
+            }).join('') || '<tr><td colspan="9" style="text-align: center; padding: 25px;">No customers found. Click "Add New Customer" to get started.</td></tr>';
+        }
+
+        function openCustomerModal() {
+            if (!currentUser) return;
+            const perms = ROLE_PERMISSIONS[currentUser.role] || ROLE_PERMISSIONS.cashier;
+            if (!perms.canEditCustomers) { showToast('Access denied: You cannot manage customers', 'error'); return; }
+            editingCustomerId = null;
+            document.getElementById('customer-modal-title').textContent = 'Add Customer';
+            document.getElementById('cust-firstname').value = '';
+            document.getElementById('cust-lastname').value = '';
+            document.getElementById('cust-phone').value = '';
+            document.getElementById('cust-email').value = '';
+            document.getElementById('cust-type').value = 'new';
+            document.getElementById('cust-id').value = '';
+            document.getElementById('cust-discount').value = '0';
+            document.getElementById('cust-credit-limit').value = '0';
+            document.getElementById('cust-credit-allowed').checked = false;
+            document.getElementById('cust-address').value = '';
+            document.getElementById('cust-notes').value = '';
+            document.getElementById('customer-modal').classList.add('active');
+        }
+
+        function closeCustomerModal() {
+            document.getElementById('customer-modal').classList.remove('active');
+        }
+
+        async function saveCustomer() {
+            const firstName = document.getElementById('cust-firstname').value.trim();
+            const lastName = document.getElementById('cust-lastname').value.trim();
+            const phone = document.getElementById('cust-phone').value.trim();
+            const email = document.getElementById('cust-email').value.trim();
+            const type = document.getElementById('cust-type').value;
+            const idNumber = document.getElementById('cust-id').value.trim();
+            const discount = parseFloat(document.getElementById('cust-discount').value) || 0;
+            const creditLimit = parseFloat(document.getElementById('cust-credit-limit').value) || 0;
+            const creditAllowed = document.getElementById('cust-credit-allowed').checked;
+            const address = document.getElementById('cust-address').value.trim();
+            const notes = document.getElementById('cust-notes').value.trim();
+
+            if (!firstName || !lastName || !phone) {
+                showToast('Please fill in first name, last name and phone number', 'error');
+                return;
+            }
+
+            const data = {
+                firstName, lastName, phone, email, type, idNumber,
+                discount, creditLimit, creditAllowed,
+                creditBalance: 0,
+                address, notes
+            };
+
+            // Preserve existing credit balance if editing
+            if (editingCustomerId) {
+                const existing = customers.find(c => (c.firestoreId || c.id) === editingCustomerId);
+                if (existing) {
+                    data.creditBalance = existing.creditBalance || 0;
+                }
+                await updateDoc('customers', editingCustomerId, data);
+                showToast('Customer updated!', 'success');
+            } else {
+                await addDoc('customers', data);
+                showToast('Customer added!', 'success');
+            }
+            closeCustomerModal();
+        }
+
+        function editCustomer(id) {
+            if (!currentUser) return;
+            const perms = ROLE_PERMISSIONS[currentUser.role] || ROLE_PERMISSIONS.cashier;
+            if (!perms.canEditCustomers) { showToast('Access denied', 'error'); return; }
+            const c = customers.find(c => (c.firestoreId || c.id) === id);
+            if (!c) return;
+            editingCustomerId = id;
+            document.getElementById('customer-modal-title').textContent = 'Edit Customer';
+            document.getElementById('cust-firstname').value = c.firstName;
+            document.getElementById('cust-lastname').value = c.lastName;
+            document.getElementById('cust-phone').value = c.phone;
+            document.getElementById('cust-email').value = c.email || '';
+            document.getElementById('cust-type').value = c.type || 'new';
+            document.getElementById('cust-id').value = c.idNumber || '';
+            document.getElementById('cust-discount').value = c.discount || 0;
+            document.getElementById('cust-credit-limit').value = c.creditLimit || 0;
+            document.getElementById('cust-credit-allowed').checked = c.creditAllowed || false;
+            document.getElementById('cust-address').value = c.address || '';
+            document.getElementById('cust-notes').value = c.notes || '';
+            document.getElementById('customer-modal').classList.add('active');
+        }
+
+        async function deleteCustomer(id) {
+            if (!currentUser) return;
+            const perms = ROLE_PERMISSIONS[currentUser.role] || ROLE_PERMISSIONS.cashier;
+            if (!perms.canEditCustomers) { showToast('Access denied', 'error'); return; }
+            const c = customers.find(c => (c.firestoreId || c.id) === id);
+            const name = c ? `${c.firstName} ${c.lastName}` : 'this customer';
+            if (!confirm(`Are you sure you want to delete ${name}?`)) return;
+            await deleteDoc('customers', id);
+            showToast('Customer deleted', 'info');
+        }
+
+        function viewCustomerDetails(id) {
+            const c = customers.find(c => (c.firestoreId || c.id) === id);
+            if (!c) return;
+            const cid = c.firestoreId || c.id;
+
+            // Calculate stats
+            const custSales = sales.filter(s => s.customer && s.customer.id === cid);
+            const totalSpent = custSales.reduce((sum, s) => sum + s.total, 0);
+            const totalPurchases = custSales.length;
+            const creditDue = c.creditBalance || 0;
+            const availableCredit = c.creditLimit - creditDue;
+
+            // Build details HTML
+            let detailsHtml = `
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                    <div>
+                        <p><strong>Name:</strong> ${c.firstName} ${c.lastName}</p>
+                        <p><strong>Phone:</strong> ${c.phone}</p>
+                        <p><strong>Email:</strong> ${c.email || '-'}</p>
+                        <p><strong>Type:</strong> <span class="customer-badge ${c.type}">${c.type.toUpperCase()}</span></p>
+                    </div>
+                    <div>
+                        <p><strong>ID/PIN:</strong> ${c.idNumber || '-'}</p>
+                        <p><strong>Discount:</strong> ${c.discount || 0}%</p>
+                        <p><strong>Address:</strong> ${c.address || '-'}</p>
+                        <p><strong>Notes:</strong> ${c.notes || '-'}</p>
+                    </div>
+                </div>
+                <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+                    <p><strong>Total Purchases:</strong> ${totalPurchases} orders | <strong>Total Spent:</strong> KSh ${totalSpent.toFixed(2)}</p>
+                </div>
+            `;
+
+            // Credit section
+            let creditHtml = '';
+            if (c.creditAllowed) {
+                const creditClass = creditDue > 0 ? 'color: #e74c3c;' : 'color: #27ae60;';
+                creditHtml = `
+                    <div style="background: ${creditDue > 0 ? '#fdf2f2' : '#e8f8f5'}; padding: 15px; border-radius: 8px; border-left: 4px solid ${creditDue > 0 ? '#e74c3c' : '#27ae60'};">
+                        <h4 style="margin-bottom: 10px;">💳 Credit Account</h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; font-size: 13px;">
+                            <div><strong>Credit Limit:</strong><br>KSh ${c.creditLimit.toFixed(2)}</div>
+                            <div><strong>Balance Due:</strong><br><span style="${creditClass} font-weight: 700;">KSh ${creditDue.toFixed(2)}</span></div>
+                            <div><strong>Available:</strong><br>KSh ${availableCredit.toFixed(2)}</div>
+                        </div>
+                        ${creditDue > 0 ? `<button class="btn-primary" style="margin-top: 10px; padding: 8px 16px; font-size: 13px; border: none; border-radius: 6px; cursor: pointer;" onclick="recordCreditPayment('${cid}')">💵 Record Credit Payment</button>` : ''}
+                    </div>
+                `;
+            } else {
+                creditHtml = `<div style="background: #eceff1; padding: 12px; border-radius: 8px; font-size: 13px; color: #546e7a;">Credit sales are not enabled for this customer.</div>`;
+            }
+
+            document.getElementById('customer-details-content').innerHTML = detailsHtml;
+            document.getElementById('customer-credit-section').innerHTML = creditHtml;
+
+            // Populate sales history
+            document.getElementById('customer-sales-table').innerHTML = custSales.sort((a, b) => new Date(b.date) - new Date(a.date)).map(sale => {
+                const date = new Date(sale.date);
+                const itemCount = sale.items.reduce((sum, i) => sum + i.qty, 0);
+                const paymentLabel = sale.payment === 'mobile' ? 'M-Pesa' : sale.payment === 'credit' ? 'Credit' : sale.payment.toUpperCase();
+                const statusBadge = sale.status === 'credit' && sale.creditRemaining > 0
+                    ? `<span style="color: #e67e22; font-weight: 600;">UNPAID</span>`
+                    : `<span style="color: #27ae60; font-weight: 600;">PAID</span>`;
+                return `<tr>
+                    <td>${sale.id}</td>
+                    <td>${date.toLocaleDateString('en-KE')} ${date.toLocaleTimeString('en-KE', {hour: '2-digit', minute:'2-digit'})}</td>
+                    <td>${itemCount} items</td>
+                    <td>${paymentLabel}</td>
+                    <td>KSh ${sale.total.toFixed(2)}</td>
+                    <td>${statusBadge}</td>
+                </tr>`;
+            }).join('') || '<tr><td colspan="6" style="text-align: center;">No purchases yet</td></tr>';
+
+            document.getElementById('customer-details-modal').classList.add('active');
+        }
+
+// ===================== PURCHASE STOCK =====================
         function populatePurchaseProductSelect() {
             const select = document.getElementById('purchase-product');
             select.innerHTML = '<option value="">-- Select Product --</option>' + products.map(p => `<option value="${p.firestoreId || p.id}">${p.icon || '📦'} ${p.name} (Stock: ${p.stock})</option>`).join('');
