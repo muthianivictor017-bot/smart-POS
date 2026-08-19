@@ -12,46 +12,8 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body class="auth-locked">
-  <section class="auth-screen" id="authScreen" aria-label="Account access">
-    <div class="auth-card login-card" id="loginCard">
-      <div class="auth-brand centered"><span class="brand-mark"><i class="fa-solid fa-layer-group"></i></span><span>Atelier<span class="brand-dot">.</span></span></div>
-      <span class="secure-chip"><i class="fa-solid fa-lock"></i> Secure store access</span>
-      <h2>Welcome back</h2>
-      <p class="auth-subtitle">Sign in to open your store workspace.</p>
-      <div class="auth-error" id="authError" role="alert"></div>
-      <form id="signInForm">
-        <div class="auth-field"><label for="workspaceCode">Workspace</label><div><i class="fa-solid fa-store"></i><input id="workspaceCode" name="workspace" autocomplete="organization" placeholder="e.g. ATELIER" required minlength="2"></div></div>
-        <div class="auth-field"><label for="signInEmail">Email address</label><div><i class="fa-regular fa-envelope"></i><input id="signInEmail" type="email" autocomplete="username" placeholder="you@company.com" required></div></div>
-        <div class="auth-field"><div class="field-label-row"><label for="signInPassword">Password</label><button type="button" id="forgotPassword">Forgot password?</button></div><div><i class="fa-solid fa-key"></i><input id="signInPassword" type="password" autocomplete="current-password" placeholder="Enter your password" required minlength="8"><button class="password-toggle" type="button" id="passwordToggle" aria-label="Show password"><i class="fa-regular fa-eye"></i></button></div></div>
-        <label class="remember-row"><input type="checkbox" id="rememberDevice"><span>Keep me signed in on this device</span></label>
-        <button class="auth-submit" id="signInBtn" type="submit"><span>Sign in</span><i class="fa-solid fa-arrow-right"></i></button>
-      </form>
-      <div class="auth-divider"><span>New to Atelier?</span></div>
-      <button class="signup-open-btn" id="openSignUp"><i class="fa-solid fa-store"></i> Create a new store & admin</button>
-      <div class="demo-access" id="demoAccess" hidden><span>Preview</span><button id="demoBtn"><i class="fa-solid fa-right-to-bracket"></i> Sign in with demo account</button></div>
-      <p class="auth-trust"><i class="fa-solid fa-shield-halved"></i> Protected by encrypted, role-based access.</p>
-    </div>
-
-    <div class="auth-card signup-card" id="signupCard" hidden>
-      <button class="back-login" id="backToLogin"><i class="fa-solid fa-arrow-left"></i> Back to sign in</button>
-      <div class="auth-brand centered compact"><span class="brand-mark"><i class="fa-solid fa-layer-group"></i></span><span>Atelier<span class="brand-dot">.</span></span></div>
-      <h2>Create your store</h2>
-      <p class="auth-subtitle">Set up the workspace and its first administrator.</p>
-      <div class="auth-error" id="signupError" role="alert"></div>
-      <form id="signUpForm">
-        <div class="signup-grid"><div class="auth-field"><label for="storeName">Store name</label><div><i class="fa-solid fa-shop"></i><input id="storeName" placeholder="Acme Retail" required minlength="2"></div></div><div class="auth-field"><label for="newWorkspaceCode">Workspace code</label><div><i class="fa-solid fa-hashtag"></i><input id="newWorkspaceCode" placeholder="ACME" required minlength="2" maxlength="30"></div></div></div>
-        <div class="auth-field"><label for="adminName">Administrator name</label><div><i class="fa-regular fa-user"></i><input id="adminName" autocomplete="name" placeholder="Full name" required minlength="2"></div></div>
-        <div class="auth-field"><label for="adminEmail">Administrator email</label><div><i class="fa-regular fa-envelope"></i><input id="adminEmail" type="email" autocomplete="email" placeholder="admin@company.com" required></div></div>
-        <div class="auth-field"><label for="adminPassword">Create password</label><div><i class="fa-solid fa-key"></i><input id="adminPassword" type="password" autocomplete="new-password" placeholder="12+ characters, mixed case, number & symbol" required minlength="12"></div></div>
-        <div class="auth-field"><label for="registrationCode">Registration code</label><div><i class="fa-solid fa-ticket"></i><input id="registrationCode" type="password" placeholder="Provided by your system operator" required></div></div>
-        <label class="terms-row"><input type="checkbox" id="acceptTerms" required><span>I agree to the security and data-handling requirements.</span></label>
-        <button class="auth-submit" id="signUpBtn" type="submit"><span>Create store & admin</span><i class="fa-solid fa-arrow-right"></i></button>
-      </form>
-    </div>
-  </section>
-
-  <aside class="sidebar" inert aria-hidden="true">
+<body>
+  <aside class="sidebar">
     <div class="brand"><span class="brand-mark"><i class="fa-solid fa-layer-group"></i></span><span>Atelier<span class="brand-dot">.</span></span></div>
     <div class="store-switch"><div><small>Current location</small><strong>Westlands Flagship</strong></div><i class="fa-solid fa-chevron-down"></i></div>
     <nav id="nav">
@@ -72,11 +34,11 @@
     </nav>
     <div class="sidebar-bottom">
       <button class="support"><i class="fa-regular fa-circle-question"></i><span>Help & support</span></button>
-      <div class="user-card"><span class="avatar" id="sessionAvatar">AM</span><div><strong id="sessionUserName">Amina M.</strong><small id="sessionUserRole">Store manager</small></div><button id="userMenuBtn" aria-label="Sign out" title="Sign out"><i class="fa-solid fa-arrow-right-from-bracket"></i></button></div>
+      <div class="user-card"><span class="avatar" id="sessionAvatar">AM</span><div><strong id="sessionUserName">Amina M.</strong><small id="sessionUserRole">Store manager</small></div></div>
     </div>
   </aside>
 
-  <main class="main" inert aria-hidden="true">
+  <main class="main">
     <header class="topbar">
       <div><h1 id="pageTitle">Checkout</h1><p id="pageSubtitle">Tuesday, 19 August 2026 <span class="dot-sep">•</span> Register #02</p></div>
       <div class="top-actions">
