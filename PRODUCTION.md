@@ -24,7 +24,30 @@ The repository now contains a PostgreSQL-backed API for authenticated, transacti
 - Health/readiness probes, graceful shutdown and request IDs
 - Docker runtime, PostgreSQL health checks and reproducible migrations
 
-## First deployment
+## Deploying to Render
+
+The repository ships a [Render Blueprint](render.yaml) that provisions the web
+service and a managed PostgreSQL database, and connects them automatically.
+
+1. Push the repository (or a fork) to GitHub and merge the desired branch to
+   `main`.
+2. Open <https://render.com/deploy?repo=muthianivictor017-bot/smart-POS> (or
+   create a new Blueprint from the Render dashboard) and follow the prompts.
+3. On the first successful deploy the blueprint:
+   - applies all migrations (`preDeployCommand`), and
+   - seeds the initial organization, location, register, chart of accounts and
+     admin user once (`initialDeployHook`, idempotent).
+4. Retrieve the generated credentials from the service's **Environment** tab:
+   - `SEED_ADMIN_PASSWORD` — the administrator's initial password,
+   - `JWT_SECRET` and `STORE_REGISTRATION_CODE` — generated automatically.
+5. Log in at the service URL as `SEED_ADMIN_EMAIL` with the password above and
+   change it immediately. Save the organization, location and register UUIDs
+   printed by the seed hook in the deploy logs.
+
+`DATABASE_URL` is injected from the managed database. Set `CORS_ORIGINS` only
+if a separate frontend origin must call the API.
+
+## First deployment (Docker / self-hosted)
 
 ```bash
 cp .env.example .env
@@ -37,7 +60,9 @@ SEED_ADMIN_PASSWORD='use-a-password-manager-value' npm run seed
 npm start
 ```
 
-Save the organization, location and register UUIDs printed by the seed command. Do not run the seed command twice in a production organization.
+Save the organization, location and register UUIDs printed by the seed command.
+The seed is idempotent: it provisions the `ATELIER` organization exactly once
+and skips gracefully if it already exists.
 
 ## API flow
 
