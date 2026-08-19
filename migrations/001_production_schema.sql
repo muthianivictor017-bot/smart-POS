@@ -2,7 +2,7 @@ BEGIN;
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 CREATE TABLE IF NOT EXISTS organizations (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(), name text NOT NULL,
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(), code text NOT NULL UNIQUE, name text NOT NULL,
   kra_pin text, currency char(3) NOT NULL DEFAULT 'KES', timezone text NOT NULL DEFAULT 'Africa/Nairobi',
   created_at timestamptz NOT NULL DEFAULT now()
 );

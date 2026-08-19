@@ -28,6 +28,11 @@ let expenses=[
 ];
 const money=n=>`KSh ${Math.round(n).toLocaleString('en-KE')}`;
 const el=id=>document.getElementById(id);
+const session={token:localStorage.getItem('atelier_access_token')||sessionStorage.getItem('atelier_access_token'),demo:false};
+function showWorkspace(user={name:'Amina M.',role:'Store manager'},demo=false){session.demo=demo;el('authScreen').classList.add('hidden');document.body.classList.remove('auth-locked');const name=user.name||'Team member',role=(user.role||'staff').replace('_',' ');el('sessionUserName').textContent=name;el('sessionUserRole').textContent=role.charAt(0).toUpperCase()+role.slice(1);el('sessionAvatar').textContent=name.split(/\s+/).slice(0,2).map(x=>x[0]).join('').toUpperCase()}
+function showLoginError(message){el('authError').textContent=message;el('authError').classList.add('show')}
+async function initializeAuth(){try{const config=await fetch('/api/v1/config').then(r=>r.json());el('demoAccess').hidden=!config.demoMode;if(session.token){const response=await fetch('/api/v1/auth/me',{headers:{Authorization:`Bearer ${session.token}`}});if(response.ok){const {user}=await response.json();showWorkspace(user);return}localStorage.removeItem('atelier_access_token');session.token=null}}catch{el('demoAccess').hidden=false;showLoginError('The authentication service is unavailable. You may use the demo workspace while it reconnects.')}}
+function signOut(){localStorage.removeItem('atelier_access_token');sessionStorage.removeItem('atelier_access_token');session.token=null;session.demo=false;document.body.classList.add('auth-locked');el('authScreen').classList.remove('hidden');el('signInForm').reset();el('authError').classList.remove('show')}
 
 function renderCategories(){
   const cats=['All items','Groceries','Produce','Dairy','Bakery','Beverages','Meat','Household'];
@@ -106,4 +111,10 @@ el('discountBtn').onclick=()=>{modal(`<div class="modal-head"><h2>Apply order di
 el('modalBackdrop').onclick=e=>{if(e.target===el('modalBackdrop'))closeModal()};
 document.addEventListener('keydown',e=>{if(e.key==='F2'){e.preventDefault();navigate('checkout')}if(e.key==='F4'){e.preventDefault();navigate('checkout');el('scanInput').focus()}if(e.key==='F8'){e.preventDefault();openPayment()}if(e.key==='Escape')closeModal()});
 el('shiftBtn').onclick=()=>{navigate('team')};
-renderCategories();renderProducts();renderCart();
+el('signInForm').onsubmit=async event=>{event.preventDefault();el('authError').classList.remove('show');const button=el('signInBtn');button.disabled=true;button.querySelector('span').textContent='Signing in…';try{const response=await fetch('/api/v1/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({organizationCode:el('workspaceCode').value,email:el('signInEmail').value,password:el('signInPassword').value})});const data=await response.json();if(!response.ok)throw new Error(data.error?.message||'Unable to sign in');session.token=data.accessToken;if(el('rememberDevice').checked)localStorage.setItem('atelier_access_token',data.accessToken);else sessionStorage.setItem('atelier_access_token',data.accessToken);showWorkspace(data.user)}catch(error){showLoginError(error.message)}finally{button.disabled=false;button.querySelector('span').textContent='Sign in to workspace'}};
+el('passwordToggle').onclick=()=>{const input=el('signInPassword'),show=input.type==='password';input.type=show?'text':'password';el('passwordToggle').innerHTML=`<i class="fa-regular fa-eye${show?'-slash':''}"></i>`;el('passwordToggle').setAttribute('aria-label',show?'Hide password':'Show password')};
+el('demoBtn').onclick=()=>showWorkspace({name:'Amina M.',role:'Store manager'},true);
+el('userMenuBtn').onclick=signOut;
+el('forgotPassword').onclick=()=>showLoginError('Ask your workspace administrator to reset your password.');
+el('supportLink').onclick=()=>showLoginError('Contact support@atelierpos.co.ke for account assistance.');
+initializeAuth();renderCategories();renderProducts();renderCart();
