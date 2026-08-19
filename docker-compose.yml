@@ -24,6 +24,7 @@ services:
       JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET}
       CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000}
       TRUST_PROXY: "true"
+      STORE_REGISTRATION_CODE: ${STORE_REGISTRATION_CODE:?Set STORE_REGISTRATION_CODE}
     ports:
       - "3000:3000"
     restart: unless-stopped

@@ -8,9 +8,11 @@ const schema = z.object({
   JWT_ISSUER: z.string().default('atelier-pos'),
   CORS_ORIGINS: z.string().default(''),
   PAYMENT_WEBHOOK_SECRET: z.string().default(''),
+  STORE_REGISTRATION_CODE: z.string().min(12).default('atelier-dev-registration-code'),
   TRUST_PROXY: z.enum(['true','false']).default('false')
 });
 const parsed=schema.safeParse(process.env);
 if(!parsed.success) throw new Error(`Invalid environment: ${parsed.error.message}`);
 if(parsed.data.NODE_ENV==='production'&&parsed.data.JWT_SECRET.startsWith('development-')) throw new Error('JWT_SECRET must be changed in production');
+if(parsed.data.NODE_ENV==='production'&&parsed.data.STORE_REGISTRATION_CODE==='atelier-dev-registration-code') throw new Error('STORE_REGISTRATION_CODE must be changed in production');
 module.exports={...parsed.data,TRUST_PROXY:parsed.data.TRUST_PROXY==='true',CORS_ORIGINS:parsed.data.CORS_ORIGINS.split(',').map(x=>x.trim()).filter(Boolean)};

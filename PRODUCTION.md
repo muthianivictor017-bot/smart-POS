@@ -12,6 +12,7 @@ The repository now contains a PostgreSQL-backed API for authenticated, transacti
 - 12-character password complexity, forced temporary-password changes and password rotation
 - Five-attempt account lockout with generic login errors to limit account discovery
 - Session inventory, remote revocation and security-event audit history
+- Invite-code-protected store registration that atomically creates the organization, first location, register, chart of accounts and administrator
 - Separate-user expense approval (segregation of duties)
 - Append-only stock movements and accounting journals
 - Balanced double-entry validation for every journal
@@ -27,7 +28,8 @@ The repository now contains a PostgreSQL-backed API for authenticated, transacti
 
 ```bash
 cp .env.example .env
-# Set DATABASE_URL, a random JWT_SECRET, CORS_ORIGINS and a strong database password.
+# Set DATABASE_URL, random JWT_SECRET and STORE_REGISTRATION_CODE values,
+# CORS_ORIGINS and a strong database password.
 docker compose up -d db
 npm ci
 npm run migrate
