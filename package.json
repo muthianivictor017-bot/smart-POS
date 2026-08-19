@@ -1,20 +1,28 @@
 {
-  "name": "smart-pos-app",
-  "version": "1.0.0",
-  "description": "Smart POS System - Multi-user networked with Firebase, inventory alerts, and eTIMS",
+  "name": "atelier-smart-pos",
+  "version": "2.0.0",
+  "description": "Production-oriented retail POS, inventory and double-entry accounting platform",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "NODE_ENV=development node server.js",
+    "migrate": "node src/migrate.js",
+    "seed": "node src/seed.js",
+    "test": "node --test",
+    "check": "node --check server.js && find src -name '*.js' -print0 | xargs -0 -n1 node --check"
   },
-  "engines": {
-    "node": ">=18.0.0"
-  },
+  "engines": {"node": ">=20.0.0"},
   "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "compression": "^1.8.1",
     "express": "^4.18.2",
-    "cors": "^2.8.5"
+    "express-rate-limit": "^8.6.2",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.23.0",
+    "zod": "^4.4.3"
   },
-  "keywords": ["pos", "firebase", "retail", "eTIMS", "inventory"],
-  "author": "Smart POS",
-  "license": "MIT"
+  "keywords": ["pos","retail","accounting","inventory","postgresql","kenya"],
+  "license": "MIT",
+  "devDependencies": {"supertest": "^7.2.2"}
 }
