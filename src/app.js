@@ -9,7 +9,7 @@ const apiLimit=rateLimit({windowMs:60_000,limit:300,standardHeaders:'draft-7',le
 app.get('/api/v1/config',(_req,res)=>res.json({service:'Atelier Smart POS',demoMode:config.NODE_ENV!=='production'}));
 app.get('/health',(_req,res)=>res.json({status:'ok',service:'Atelier Smart POS',version:process.env.npm_package_version||'2.0.0',timestamp:new Date().toISOString()}));
 app.get('/ready',async(_req,res)=>{try{await db.query('SELECT 1');res.json({status:'ready',database:'connected'})}catch{res.status(503).json({status:'not_ready',database:'unavailable'})}});
-app.use('/api/v1/auth',require('./routes/auth'));app.use('/api/v1/products',require('./routes/products'));app.use('/api/v1/shifts',require('./routes/shifts'));app.use('/api/v1/sales',require('./routes/sales'));app.use('/api/v1/expenses',require('./routes/expenses'));app.use('/api/v1/accounting',require('./routes/accounting'));app.use('/api/v1/audit',require('./routes/audit'));
+app.use('/api/v1/auth',require('./routes/auth'));app.use('/api/v1/security',require('./routes/security'));app.use('/api/v1/products',require('./routes/products'));app.use('/api/v1/shifts',require('./routes/shifts'));app.use('/api/v1/sales',require('./routes/sales'));app.use('/api/v1/expenses',require('./routes/expenses'));app.use('/api/v1/accounting',require('./routes/accounting'));app.use('/api/v1/audit',require('./routes/audit'));
 app.use(express.static(path.join(__dirname,'..'),{index:'index.html',extensions:['html'],maxAge:config.NODE_ENV==='production'?'1h':0}));
 app.get('*',(req,res,next)=>req.path.startsWith('/api/')?next():res.sendFile(path.join(__dirname,'..','index.html')));app.use(notFound);app.use(errorHandler);
 module.exports=app;

@@ -7,7 +7,11 @@ The repository now contains a PostgreSQL-backed API for authenticated, transacti
 - PostgreSQL transactions and row locks for checkout and FIFO batch deduction
 - Server-authoritative price, tax, discount and payment-total calculations
 - Mandatory checkout idempotency keys
-- JWT authentication and cashier/supervisor/manager/accountant/admin RBAC
+- JWT authentication with server-side revocable sessions
+- Cashier/supervisor/manager/accountant/admin RBAC and admin user provisioning
+- 12-character password complexity, forced temporary-password changes and password rotation
+- Five-attempt account lockout with generic login errors to limit account discovery
+- Session inventory, remote revocation and security-event audit history
 - Separate-user expense approval (segregation of duties)
 - Append-only stock movements and accounting journals
 - Balanced double-entry validation for every journal

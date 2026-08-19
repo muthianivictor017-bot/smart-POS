@@ -27,7 +27,8 @@ See [PRODUCTION.md](PRODUCTION.md) for deployment controls, operating procedures
 
 ## API modules
 
-- `/api/v1/auth` — authentication and session identity
+- `/api/v1/auth` — secure login, logout, session identity and password changes
+- `/api/v1/security` — user provisioning, roles, lockouts, sessions and security summary
 - `/api/v1/products` — location inventory, barcode/PLU search and alerts
 - `/api/v1/shifts` — register opening, closing and till variance
 - `/api/v1/sales` — idempotent atomic checkout and controlled refunds
